@@ -50,7 +50,7 @@ class Train
   def back_station
     if @index_station > 0
        @index_station -= 1
-       @route.station[@index_station].takin_train(self)
+       @route.station[@index_station].taking_train(self)
        @route.station[@index_station + 1].leave_train(self)
     else
   puts "Вы находитесь на первой станции"

@@ -6,16 +6,16 @@ class Station
     @trains = []
   end
 
-  def taking_train(type)
-    self.trains << type
+  def taking_train(train)
+    self.trains << train
     puts self.trains
   end
 
   def type_train_list(type)
-    self.trains.select{|train| train == type}
+    trains.select{|train| train == type}
   end
 
-  def leave_train(val)
-    self.trains.delete_at(val)
+  def leave_train(train)
+    self.trains.delete(train)
   end
 end

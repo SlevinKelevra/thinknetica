@@ -1,14 +1,14 @@
 class Train
-attr_accessor :current_speed, :count_vag, :type_train
+  attr_accessor :current_speed, :count_vag
 
-  def initialize (numer, type_train, count_vag)
+  def initialize(numer, type, count_vag)
      @numer = numer
-     @type_train = type_train
+     @type = type
      @count_vag = count_vag
      @current_speed = 0
   end
 
-  def dial_speed (dial)
+  def dial_speed(dial)
     self.current_speed += dial
   end
 
@@ -16,29 +16,34 @@ attr_accessor :current_speed, :count_vag, :type_train
     self.current_speed = 0
   end
 
-  def detach_vag (val)
+  def hitch_vag
     if self.current_speed != 0
-      puts "Нельзя откреплять/приклеплять вагоны когда поезд движеться."
-    elsif val == 'Прикрепить'
-      self.count_vag += 1
-    elsif val == 'Открепить'
-      self.count_vag -= 1
-    else puts "Ошибка ввода данных"
+      puts "Нельзя приклеплять вагоны когда поезд движеться."
+    else
+       self.count_vag += 1
     end
   end
 
-  def route_station (route)
+  def detach_vag
+    if self.current_speed != 0
+      puts "Нельзя отцеплять вагоны когда поезд движеться."
+    else
+       self.count_vag -= 1
+    end
+  end
+
+  def route_station(route)
     @route = route
     @index_station = 0
   end
 
-  def up_station
+  def set_station
     if @index_station < @route.station.size - 1
        @index_station += 1
-        @route.station[@index_station].taking_train(self)
-        @route.station[@index_station - 1].leave_train(self)
+       @route.station[@index_station].taking_train(self)
+       @route.station[@index_station - 1].leave_train(self)
     else
-      puts "Вы находитесь на последний станции, дальше двигаться нельзя"
+       puts "Вы находитесь на последний станции, дальше двигаться нельзя"
     end
   end
 
@@ -52,27 +57,27 @@ attr_accessor :current_speed, :count_vag, :type_train
     end
   end
 
-  def current_st
+  def current_station
     if @route
-      @route.station[@index_station]
+       @route.station[@index_station]
     else
-      puts "Ошибка ввода данных"
+       puts "Ошибка ввода данных"
     end
   end
 
-  def current_st
-    if @index_station - 1 >= 0
-      @route.station[@index_station -1]
+  def previous_station
+    if @index_station > 0
+       @route.station[@index_station -1]
     else
-      puts "Отсутствует предыдущая, начало пути "
+       puts "Отсутствует предыдущая, начало пути "
     end
   end
 
-  def next_st
+  def next_station
     if @index_station <  @route.station.size - 1
-      @route.station[@index_station +1]
+       @route.station[@index_station +1]
     else
-      puts "Отсутствует слудующая станция, конец пути пути "
+       puts "Отсутствует слудующая станция, конец пути пути "
     end
   end
 

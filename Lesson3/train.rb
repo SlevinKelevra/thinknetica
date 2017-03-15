@@ -25,8 +25,8 @@ class Train
   end
 
   def detach_vag
-    if self.current_speed != 0
-      puts "Нельзя отцеплять вагоны когда поезд движеться."
+    if self.current_speed != 0 || self.count_vag <= 0
+      puts "Нельзя отцеплять вагоны когда поезд движеться или у Вас уже отсутствуют все вагоны."
     else
        self.count_vag -= 1
     end
@@ -37,7 +37,7 @@ class Train
     @index_station = 0
   end
 
-  def set_station
+  def forward
     if @index_station < @route.station.size - 1
        @index_station += 1
        @route.station[@index_station].taking_train(self)

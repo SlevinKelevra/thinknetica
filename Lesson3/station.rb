@@ -1,21 +1,21 @@
 class Station
-  attr_accessor :train_in_station
+  attr_reader :trains
 
   def initialize(name_station)
     @station = name_station
-    @train_in_station = []
+    @trains = []
   end
 
   def taking_train(type)
-    self.train_in_station << type
-    puts self.train_in_station
+    self.trains << type
+    puts self.trains
   end
 
   def type_train_list(type)
-    self.train_in_station.select{|train| train == type}
+    self.trains.select{|train| train == type}
   end
 
   def leave_train(val)
-    self.train_in_station.delete_at(val)
+    self.trains.delete_at(val)
   end
 end

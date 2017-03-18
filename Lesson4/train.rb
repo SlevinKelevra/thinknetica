@@ -3,8 +3,8 @@ class Train
 
   def initialize(numer)
      @numer = numer
-     @type = type
-     @count_vag = 0
+     @type = self.class
+     @count_vag = []
      @current_speed = 0
   end
 
@@ -16,20 +16,12 @@ class Train
     self.current_speed = 0
   end
 
-  def hitch_vag
-    if self.current_speed != 0
-      puts "Нельзя приклеплять вагоны когда поезд движеться."
-    else
-       self.count_vag += 1
-    end
+  def hitch_vag(wagon)
+    @count_vag << wagon if @current_speed.zero? && type_wagon?(wagon)
   end
 
-  def detach_vag
-    if self.current_speed != 0 || self.count_vag <= 0
-      puts "Нельзя отцеплять вагоны когда поезд движеться или у Вас уже отсутствуют все вагоны."
-    else
-       self.count_vag -= 1
-    end
+  def detach_vag(wagon)
+      @count_vag.delete(wagon) if @current_speed.zero? && @count_vag.length > 0
   end
 
   def route_station(route)
@@ -79,6 +71,12 @@ class Train
     else
        puts "Отсутствует слудующая станция, конец пути пути "
     end
+  end
+
+private
+
+  def type_wagon?(wagon)
+    true if wagon.is_a?(PassengerWagon) && self.is_a?(PassengerTrain) || carriage.is_a?(CargoWagon) && self.is_a?(CargoTrain)
   end
 
 end

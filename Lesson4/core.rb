@@ -53,7 +53,7 @@ class Core
     puts "Введите конечную станцию"
     last_station = gets.chomp
     if route_any?(first_station, last_station)
-      get_train(number_train).route_station(get_route(first_station, last_station))
+    p  get_train(number_train).route_station(get_route(first_station, last_station))
     else
       puts 'Машрута не существует'
     end
@@ -114,7 +114,7 @@ class Core
   end
 
   def get_train(number_train)
-    @trains_collection.select{ |train| train == number_train}
+    @trains_collection.find{ |train| train.numer == number_train}
   end
 
   def get_station(station)
@@ -137,9 +137,9 @@ class Core
     puts 'Введите "1", если хотите добавть пассажирский вагон и "2" если грузовой'
     input = gets.chomp.to_i
     if input == 1
-      @count_vag = PassengerCarriage.new
+      @count_vag = PassengerWagon.new
     elsif input == 2
-      @count_vag = CargoCarriage.new
+      @count_vag = CargoWagon.new
     else
       puts 'Введено неверно значение'
     end

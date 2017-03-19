@@ -1,5 +1,6 @@
+
 class Train
-  attr_accessor :current_speed, :count_vag
+  attr_accessor :current_speed, :count_vag, :numer
 
   def initialize(numer)
      @numer = numer

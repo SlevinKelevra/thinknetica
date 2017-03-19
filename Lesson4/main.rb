@@ -13,7 +13,6 @@ loop do
   break if input == 11
   case input
   when 1
-    puts 'making station'
     app.creat_station
   when 2
     app.create_train

@@ -1,5 +1,5 @@
 class Station
-  attr_reader :trains
+  attr_accessor :trains, :station
 
   def initialize(name_station)
     @station = name_station
@@ -12,7 +12,7 @@ class Station
   end
 
   def type_train_list(type)
-    trains.select{|train| train == type}
+    trains.select{|train| self.numer == type}
   end
 
   def leave_train(train)

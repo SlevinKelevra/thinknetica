@@ -31,7 +31,7 @@ class Train
   end
 
   def forward
-    if @index_station < @route.station.size - 1
+    if @index_station < @route.stations.size - 1
        @index_station += 1
        @route.station[@index_station].taking_train(self)
        @route.station[@index_station - 1].leave_train(self)

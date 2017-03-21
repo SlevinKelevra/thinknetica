@@ -53,7 +53,8 @@ class Core
     puts "Введите конечную станцию"
     last_station = gets.chomp
     if route_any?(first_station, last_station)
-    p  get_train(number_train).route_station(get_route(first_station, last_station))
+    get_train(number_train).route_station(get_route(first_station, last_station))
+    p  @trains_collection
     else
       puts 'Машрута не существует'
     end
@@ -110,7 +111,7 @@ class Core
   private
 
   def get_route(first_station, last_station)
-    @route_collection.select{ |route| route.stations.first == first_station && route.stations.last == last_station }
+    @route_collection.find{ |route| route.stations.first == first_station && route.stations.last == last_station }
   end
 
   def get_train(number_train)
@@ -118,7 +119,7 @@ class Core
   end
 
   def get_station(station)
-    @station_collection.select{ |station| station.station == station}
+    @station_collection.find{ |station| station.station == station}
   end
 
   def station_any?(station)

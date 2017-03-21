@@ -7,6 +7,7 @@ class Station
   end
 
   def taking_train(train)
+    # binding.pry
     self.trains << train
     puts self.trains
   end

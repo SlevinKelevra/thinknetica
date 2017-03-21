@@ -1,3 +1,4 @@
+require 'pry'
 require_relative 'station'
 require_relative 'route'
 require_relative 'train'
@@ -53,6 +54,7 @@ class Core
     puts "Введите конечную станцию"
     last_station = gets.chomp
     if route_any?(first_station, last_station)
+    # get_train(number_train).route = (get_route(first_station, last_station))
     get_train(number_train).route_station(get_route(first_station, last_station))
     p  @trains_collection
     else
@@ -63,6 +65,7 @@ class Core
   def forward
      puts 'Введите номер поезда'
      number_train = gets.chomp.to_i
+
       if train_any?(number_train)
         get_train(number_train).forward
       else
@@ -82,12 +85,17 @@ class Core
 
     def add_wagon
       puts 'Введите номер поезда'
-      number_train = gets.chomp
-        if train_any?(number_train)
-          create_wagon
-          get_train(number_train).hitch_vag(@count_vag)
-        else
-          puts 'Введено неверно значение'
+      number_train = gets.chomp.to_i
+
+      train = get_train(number_train)
+
+      binding.pry
+
+      if train
+        create_wagon
+        train.hitch_vag(@wagons)
+      else
+        puts 'Введено неверно значение'
       end
     end
 
@@ -96,7 +104,7 @@ class Core
       number_train = gets.chomp
         if train_any?(number_train)
           create_wagon
-          get_train(number_train).detach_vag(@count_vag)
+          get_train(number_train).detach_vag(@wagons)
         else
           puts 'Введено неверно значение'
       end
@@ -138,9 +146,9 @@ class Core
     puts 'Введите "1", если хотите добавть пассажирский вагон и "2" если грузовой'
     input = gets.chomp.to_i
     if input == 1
-      @count_vag = PassengerWagon.new
+      @wagons = PassengerWagon.new
     elsif input == 2
-      @count_vag = CargoWagon.new
+      @wagons = CargoWagon.new
     else
       puts 'Введено неверно значение'
     end

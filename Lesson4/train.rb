@@ -1,11 +1,10 @@
-
 class Train
-  attr_accessor :current_speed, :count_vag, :numer
+  attr_accessor :current_speed, :wagons, :numer
 
   def initialize(numer)
      @numer = numer
      @type = self.class
-     @count_vag = []
+     @wagons = []
      @current_speed = 0
   end
 
@@ -18,23 +17,25 @@ class Train
   end
 
   def hitch_vag(wagon)
-    @count_vag << wagon if @current_speed.zero? && type_wagon?(wagon)
+    @wagons << wagon if @current_speed.zero? && type_wagon?(wagon)
   end
 
   def detach_vag(wagon)
-      @count_vag.delete(wagon) if @current_speed.zero? && @count_vag.length > 0
+      @wagons.delete(wagon) if @current_speed.zero? && @wagons.length > 0
   end
 
+  # def route=(route)
   def route_station(route)
     @route = route
     @index_station = 0
   end
 
   def forward
+    # binding.pry
     if @index_station < @route.stations.size - 1
        @index_station += 1
-       @route.station[@index_station].taking_train(self)
-       @route.station[@index_station - 1].leave_train(self)
+       @route.stations[@index_station].taking_train(self)
+       @route.stations[@index_station - 1].leave_train(self)
     else
        puts "Вы находитесь на последний станции, дальше двигаться нельзя"
     end
@@ -43,8 +44,8 @@ class Train
   def back_station
     if @index_station > 0
        @index_station -= 1
-       @route.station[@index_station].taking_train(self)
-       @route.station[@index_station + 1].leave_train(self)
+       @route.stations[@index_station].taking_train(self)
+       @route.stations[@index_station + 1].leave_train(self)
     else
   puts "Вы находитесь на первой станции"
     end
@@ -52,7 +53,7 @@ class Train
 
   def current_station
     if @route
-       @route.station[@index_station]
+       @route.stations[@index_station]
     else
        puts "Ошибка ввода данных"
     end
@@ -77,7 +78,15 @@ class Train
 private
 
   def type_wagon?(wagon)
-    true if wagon.is_a?(PassengerWagon) && self.is_a?(PassengerTrain) || carriage.is_a?(CargoWagon) && self.is_a?(CargoTrain)
+    type_passenger?(wagon) || type_cargo?(wagon)
+  end
+
+  def type_passenger?(wagon)
+    wagon.is_a?(PassengerWagon) && self.is_a?(PassengerTrain)
+  end
+
+  def type_cargo?(wagon)
+    wagon.is_a?(CargoWagon) && self.is_a?(CargoTrain)
   end
 
 end

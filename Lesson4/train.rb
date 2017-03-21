@@ -1,4 +1,4 @@
-
+require 'pry'
 class Train
   attr_accessor :current_speed, :count_vag, :numer
 
@@ -31,10 +31,11 @@ class Train
   end
 
   def forward
+    binding.pry
     if @index_station < @route.stations.size - 1
        @index_station += 1
-       @route.station[@index_station].taking_train(self)
-       @route.station[@index_station - 1].leave_train(self)
+       @route.stations[@index_station].taking_train(self)
+       @route.stations[@index_station - 1].leave_train(self)
     else
        puts "Вы находитесь на последний станции, дальше двигаться нельзя"
     end
@@ -43,8 +44,8 @@ class Train
   def back_station
     if @index_station > 0
        @index_station -= 1
-       @route.station[@index_station].taking_train(self)
-       @route.station[@index_station + 1].leave_train(self)
+       @route.stations[@index_station].taking_train(self)
+       @route.stations[@index_station + 1].leave_train(self)
     else
   puts "Вы находитесь на первой станции"
     end
@@ -77,7 +78,7 @@ class Train
 private
 
   def type_wagon?(wagon)
-    true if wagon.is_a?(PassengerWagon) && self.is_a?(PassengerTrain) || carriage.is_a?(CargoWagon) && self.is_a?(CargoTrain)
+    true if wagon.is_a?(PassengerWagon) && self.is_a?(PassengerTrain) || wagon.is_a?(CargoWagon) && self.is_a?(CargoTrain)
   end
 
 end

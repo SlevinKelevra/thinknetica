@@ -8,6 +8,7 @@ loop do
   puts "4 - для добавления маршрута к поезду\n5 - для движения поезда вперед"
   puts "6 - для движения поезда назад\n7 - добавить вагонов к поезду"
   puts "8 - убрать вагоны у поезда\n9 - посмотреть все станции"
+  puts "10 - посмотреть поезда на станции"
   puts "11 - Выход"
   input = gets.chomp.to_i
   break if input == 11
@@ -30,5 +31,7 @@ loop do
     app.detach_wagon
   when 9
     app.stations_list
+  when 10
+    app.trains_on_station
   end
 end

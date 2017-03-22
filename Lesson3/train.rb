@@ -1,10 +1,10 @@
 class Train
-  attr_accessor :current_speed, :count_vag
+  attr_accessor :current_speed, :wagon
 
-  def initialize(numer, type, count_vag)
+  def initialize(numer, type, wagon)
      @numer = numer
      @type = type
-     @count_vag = count_vag
+     @wagon = wagon
      @current_speed = 0
   end
 
@@ -20,15 +20,15 @@ class Train
     if self.current_speed != 0
       puts "Нельзя приклеплять вагоны когда поезд движеться."
     else
-       self.count_vag += 1
+       self.wagon += 1
     end
   end
 
   def detach_vag
-    if self.current_speed != 0 || self.count_vag <= 0
+    if self.current_speed != 0 || self.wagon <= 0
       puts "Нельзя отцеплять вагоны когда поезд движеться или у Вас уже отсутствуют все вагоны."
     else
-       self.count_vag -= 1
+       self.wagon -= 1
     end
   end
 

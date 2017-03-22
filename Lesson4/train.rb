@@ -1,11 +1,11 @@
 require 'pry'
 class Train
-  attr_accessor :current_speed, :count_vag, :numer
+  attr_accessor :current_speed, :wagon, :numer
 
   def initialize(numer)
      @numer = numer
      @type = self.class
-     @count_vag = []
+     @wagon = []
      @current_speed = 0
   end
 
@@ -18,11 +18,11 @@ class Train
   end
 
   def hitch_vag(wagon)
-    @count_vag << wagon if @current_speed.zero? && type_wagon?(wagon)
+    @wagon << wagon if @current_speed.zero? && type_wagon?(wagon)
   end
 
   def detach_vag(wagon)
-      @count_vag.delete(wagon) if @current_speed.zero? && @count_vag.length > 0
+      @wagon.delete(wagon) if @current_speed.zero? && @wagon.length > 0
   end
 
   def route_station(route)
@@ -65,8 +65,8 @@ class Train
 private
 
   def type_wagon?(wagon)
-     type_passenger?(wagon) || type_cargo?(wagon)
-  end
+   type_passenger?(wagon) || type_cargo?(wagon)
+ end
 
   def type_passenger?(wagon)
     wagon.is_a?(PassengerWagon) && self.is_a?(PassengerTrain)
@@ -75,4 +75,5 @@ private
   def type_cargo?(wagon)
     wagon.is_a?(CargoWagon) && self.is_a?(CargoTrain)
   end
+
 end

@@ -65,15 +65,6 @@ class Train
 private
 
   def type_wagon?(wagon)
-   type_passenger?(wagon) || type_cargo?(wagon)
- end
-
-  def type_passenger?(wagon)
-    wagon.is_a?(PassengerWagon) && self.is_a?(PassengerTrain)
-  end
-
-  def type_cargo?(wagon)
-    wagon.is_a?(CargoWagon) && self.is_a?(CargoTrain)
   end
 
 end

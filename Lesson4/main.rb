@@ -14,7 +14,7 @@ loop do
   break if input == 11
   case input
   when 1
-    app.creat_station
+    app.create_station
   when 2
     app.create_train
   when 3

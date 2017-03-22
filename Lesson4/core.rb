@@ -14,7 +14,7 @@ class Core
     @trains_collection = []
   end
 
-  def creat_station
+  def create_station
     puts "Введите название станции"
     input = gets.chomp
     @station_collection << Station.new(input)
@@ -26,6 +26,7 @@ class Core
     first_station = gets.chomp
     puts "Введите конечную станцию"
     last_station = gets.chomp
+    binding.pry
     @route_collection << Route.new(get_station(first_station), get_station(last_station))
     p @route_collection
     puts "Маршрут создан"
@@ -54,19 +55,22 @@ class Core
     first_station = gets.chomp
     puts "Введите конечную станцию"
     last_station = gets.chomp
-    if route_any?(first_station, last_station)
+    train = get_train(number_train)
+    route = get_route(first_station, last_station)
+    if train && route
       get_train(number_train).route_station(get_route(first_station, last_station))
     p  @trains_collection
     else
-      puts 'Машрута не существует'
+      puts 'Машрута или поезда не существует'
     end
   end
 
   def forward
     puts 'Введите номер поезда'
     number_train = gets.chomp.to_i
-    if train_any?(number_train)
-      get_train(number_train).forward
+    train = get_train(number_train)
+    if train
+      train.forward
     else
       puts 'Поезд несоздан'
     end
@@ -75,8 +79,9 @@ class Core
   def back_station
     puts 'Введите номер поезда'
     number_train = gets.chomp.to_i
-    if train_any?(number_train)
-      get_train(number_train).back_station
+    train = get_train(number_train)
+    if train
+      train.back_station
     else
       puts 'Поезд несоздан'
     end
@@ -85,9 +90,10 @@ class Core
   def add_wagon
     puts 'Введите номер поезда'
     number_train = gets.chomp.to_i
-    if train_any?(number_train)
+    train = get_train(number_train)
+    if train
       create_wagon
-      get_train(number_train).hitch_vag(@count_vag)
+      train.hitch_vag(@count_vag)
     else
       puts 'Введено неверно значение'
     end
@@ -96,16 +102,17 @@ class Core
   def detach_wagon
     puts 'Введите номер поезда'
     number_train = gets.chomp
-    if train_any?(number_train)
+    train = get_train(number_train)
+    if train
       create_wagon
-      get_train(number_train).detach_vag(@count_vag)
+      train.detach_vag(@count_vag)
     else
       puts 'Введено неверно значение'
     end
   end
 
   def stations_list
-    @station_collection.each { |station| puts station.station }
+    @station_collection.each { |station| puts station.name }
   end
 
   def trains_on_station
@@ -118,7 +125,7 @@ class Core
   private
 
   def get_route(first_station, last_station)
-    @route_collection.find{ |route| route.stations.first.station == first_station && route.stations.last.station == last_station }
+    @route_collection.find{ |route| route.stations.first.name == first_station && route.stations.last.name == last_station }
   end
 
   def get_train(number_train)
@@ -126,19 +133,7 @@ class Core
   end
 
   def get_station(station)
-    @station_collection.find{ |i| i.station == station}
-  end
-
-  def station_any?(station)
-    get_station(station)
-  end
-
-  def train_any?(train)
-    get_train(train)
-  end
-
-  def route_any?(first_station, last_station)
-    get_route(first_station, last_station)
+    @station_collection.find{ |i| i.name == station}
   end
 
   def create_wagon

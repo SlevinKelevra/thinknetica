@@ -31,11 +31,10 @@ class Train
   end
 
   def forward
-    binding.pry
     if @index_station < @route.stations.size - 1
        @index_station += 1
-       @route.stations[@index_station].taking_train(self)
-       @route.stations[@index_station - 1].leave_train(self)
+       current_station.taking_train(self)
+       previous_station.leave_train(self)
     else
        puts "Вы находитесь на последний станции, дальше двигаться нельзя"
     end
@@ -44,41 +43,36 @@ class Train
   def back_station
     if @index_station > 0
        @index_station -= 1
-       @route.stations[@index_station].taking_train(self)
-       @route.stations[@index_station + 1].leave_train(self)
+       current_station.taking_train(self)
+       next_station.leave_train(self)
     else
   puts "Вы находитесь на первой станции"
     end
   end
 
   def current_station
-    if @route
-       @route.station[@index_station]
-    else
-       puts "Ошибка ввода данных"
-    end
+    @route.stations[@index_station] if @route
   end
 
   def previous_station
-    if @index_station > 0
-       @route.station[@index_station -1]
-    else
-       puts "Отсутствует предыдущая, начало пути "
-    end
+     @route.stations[@index_station -1] if @index_station > 0
   end
 
   def next_station
-    if @index_station <  @route.station.size - 1
-       @route.station[@index_station +1]
-    else
-       puts "Отсутствует слудующая станция, конец пути пути "
-    end
+     @route.stations[@index_station +1] if @index_station <  @route.stations.size - 1
   end
 
 private
 
   def type_wagon?(wagon)
-    true if wagon.is_a?(PassengerWagon) && self.is_a?(PassengerTrain) || wagon.is_a?(CargoWagon) && self.is_a?(CargoTrain)
+     type_passenger?(wagon) || type_cargo?(wagon)
   end
 
+  def type_passenger?(wagon)
+    wagon.is_a?(PassengerWagon) && self.is_a?(PassengerTrain)
+  end
+
+  def type_cargo?(wagon)
+    wagon.is_a?(CargoWagon) && self.is_a?(CargoTrain)
+  end
 end

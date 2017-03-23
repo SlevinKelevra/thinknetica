@@ -1,7 +1,9 @@
 class PassengerTrain < Train
 
+  private
+
   def type_wagon?(wagon)
-    wagon.is_a?(PassengerWagon) && self.is_a?(PassengerTrain)
+    wagon.is_a?(PassengerWagon)
   end
 
 end

@@ -4,11 +4,10 @@ require_relative 'instance_counter'
 class Train
 
   include Manufacturer
-  include InstanceCounter::InstanceMethods
-  extend InstanceCounter::ClassMethods
+  include InstanceCounter
   attr_accessor :current_speed, :wagon, :numer
 
-  @@trains = []
+  @@trains = {}
   def self.find(numer)
     @@trains[numer]
   end
@@ -18,7 +17,6 @@ class Train
      @type = self.class
      @wagon = []
      @current_speed = 0
-     @manufacturer = name_manufacturer
      @@trains[numer] = self
      register_instance
   end

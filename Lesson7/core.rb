@@ -45,12 +45,12 @@ class Core
     train.back_station if train
   end
 
-  def create_passenger_wagon
-      @wagon = PassengerWagon.new
+  def create_passenger_wagon(place)
+      @wagon = PassengerWagon.new(place)
   end
 
-  def create_cargo_wagon
-      @wagon = CargoWagon.new
+  def create_cargo_wagon(volume)
+      @wagon = CargoWagon.new(volume)
   end
 
   def add_wagon(number_train)
@@ -71,6 +71,26 @@ class Core
   def trains_on_station(station)
     get_station(station).trains.each { |train| puts "Номер поезда #{train.numer} #{train.type} с #{train.wagon.length} вагонов"}
   end
+
+  def see_train(number_train)
+    train = @trains_collection.find { |train| train.numer == number_train }
+    if train.is_a? PassengerTrain
+      train.each_wagon { |wagon, wagon_number| puts "Вагон: #{wagon.class}, номер #{index}, свободных мест: #{wagon.free_place}, занятых мест #{wagon.busy_place}"}
+    elsif train.is_a? CargoTrain
+      train.each_wagon { |wagon, wagon_number| puts "Вагон: #{wagon.class}, номер #{index}, свободный объем #{wagon.free_volume}, занятый объем #{wagon.volume_occupeid}"}
+    end
+  end
+
+  def volume_wagon (number)
+    p train = @trains_collection.find { |train| train.numer == number}
+    if train.wagon.is_a?(PassengerWagon)
+       train.wagon.take_place
+     elsif train.wagon.is_a?(CargoWagon)
+       puts "Введите догружаемый объем"
+       volume = gets.chomp.to_f
+       train.wagon.take_volume(volume)
+     end
+    end
 
   private
 

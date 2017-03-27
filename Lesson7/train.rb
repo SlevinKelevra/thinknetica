@@ -74,6 +74,10 @@ class Train
      @route.stations[@index_station +1] if @index_station <  @route.stations.size - 1
   end
 
+  def each_wagon
+      wagon.each.with_index(1) { |car, index| yield(car, index) }
+  end
+
 private
 
   def validate!
@@ -81,7 +85,7 @@ private
   end
 
   def type_wagon?(wagon)
-    
+
   end
 
 end

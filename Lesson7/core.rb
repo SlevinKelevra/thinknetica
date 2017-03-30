@@ -46,11 +46,11 @@ class Core
   end
 
   def create_passenger_wagon(place)
-      @wagon = PassengerWagon.new(place)
+    @wagon = PassengerWagon.new(place)
   end
 
   def create_cargo_wagon(volume)
-      @wagon = CargoWagon.new(volume)
+    @wagon = CargoWagon.new(volume)
   end
 
   def add_wagon(number_train)

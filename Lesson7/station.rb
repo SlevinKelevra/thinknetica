@@ -22,9 +22,9 @@ class Station
   end
 
   def each_train
-     trains.each { |train| yield(train) }
+    trains.each { |train| yield(train) }
   end
-  
+
   def taking_train(train)
     self.trains << train
   end

@@ -9,6 +9,7 @@ loop do
   puts "10 - посмотреть все станции"
   puts "11 - посмотреть поезда на станции\n12 - добавить пассажиров или груз в вагоны"
   puts "13 - посмотреть информацию о поезде"
+  puts "14 - перебор всех поездов на станции"
   puts "15 - Выход"
 
   input = gets.chomp.to_i
@@ -54,5 +55,9 @@ loop do
   when 13
     enter_number_train
     @app.see_train(@number_train)
+
+  when 14
+    every_train
+
 end
 end

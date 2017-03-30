@@ -1,5 +1,7 @@
 require_relative 'core'
-require 'pry'
+
+@app = Core.new
+
 
 def сaught_error(e)
   puts "!!!!!!!!!! ERROR : #{e.message} !!!!!!!!!!"
@@ -145,5 +147,8 @@ def place_in_wagon
   @app.volume_wagon(@number_train)
 end
 
-@app = Core.new
-attr_reader :app
+def every_train
+  enter_name_station
+  @app.station_collection[@station].each_train
+
+end

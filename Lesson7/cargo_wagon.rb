@@ -10,7 +10,7 @@ class CargoWagon
   end
 
   def take_volume(volume)
-    @free_volume = @free_volume - volume unless (@free_volume - volume) < 0
+    @free_volume -= volume unless (@free_volume - volume) < 0
   end
 
   def volume_occupeid

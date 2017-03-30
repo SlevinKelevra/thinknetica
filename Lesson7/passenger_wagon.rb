@@ -10,11 +10,11 @@ class PassengerWagon
   end
 
   def busy_place
-    @seats - @free_seats
+    @place - @free_place
   end
 
   def take_place
-    @free_seats = @free_seats - 1 unless @free_place.zero?
+    @free_place -= 1 unless @free_place.zero?
   end
 
 end

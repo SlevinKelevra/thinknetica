@@ -1,8 +1,10 @@
 require_relative 'validation'
-include Validation
+
 
 class Station
   @@list_station = []
+
+  include Validation
 
   def self.all
     @@list_station

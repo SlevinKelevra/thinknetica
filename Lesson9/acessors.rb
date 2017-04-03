@@ -17,7 +17,7 @@ module Acessors
     var_name = "@#{name}".to_sym
     define_method(name) { instance_variable_get(var_name) }
     define_method("#{name}=".to_sym) do |value|
-      raise 'Wrong variable type' unless value.class.to_s == type.to_s
+      raise 'Wrong variable type' unless value.class.is_a? == type.is_a?
       instance_variable_set(var_name, value)
     end
   end
